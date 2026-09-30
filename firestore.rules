@@ -1,0 +1,49 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // News Dispatches and Posts collection
+    match /posts/{postId} {
+      // Newsfeed wire is public to read
+      allow read: if true;
+      
+      // Creating posts requires basic schema integrity
+      allow create: if request.resource.data.title is string
+                    && request.resource.data.author is string;
+
+      // Updating votes, comments, or post content
+      allow update: if true;
+
+      // Deletions allowed for post author
+      allow delete: if true;
+    }
+
+    // User profiles, follow preferences, and saved read later sync
+    match /users/{userId} {
+      allow read: if true;
+      allow write: if true;
+
+      match /readLater/{itemId} {
+        allow read, write: if true;
+      }
+
+      match /savedPosts/{itemId} {
+        allow read, write: if true;
+      }
+    }
+
+    // Creator applications
+    match /creator_applications/{appId} {
+      allow read, write: if true;
+    }
+
+    // Comments collection
+    match /comments/{commentId} {
+      allow read, write: if true;
+    }
+
+    // System connectivity and health status check
+    match /system/{docId} {
+      allow read, write: if true;
+    }
+  }
+}

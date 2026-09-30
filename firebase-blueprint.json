@@ -1,0 +1,79 @@
+{
+  "entities": {
+    "Post": {
+      "title": "Post",
+      "description": "News article or discussion submission",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "title": { "type": "string" },
+        "content": { "type": "string" },
+        "author": { "type": "string" },
+        "communityId": { "type": "string" },
+        "score": { "type": "number" },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["id", "title", "author", "createdAt"]
+    },
+    "User": {
+      "title": "User",
+      "description": "User profile with following authors and saved read later articles",
+      "type": "object",
+      "properties": {
+        "username": { "type": "string" },
+        "displayName": { "type": "string" },
+        "email": { "type": "string" },
+        "followingAuthors": { "type": "array" },
+        "savedPostIds": { "type": "array" },
+        "readLaterItems": { "type": "array" }
+      },
+      "required": ["username"]
+    },
+    "SavedItem": {
+      "title": "SavedItem",
+      "description": "Individual saved bookmarked post record",
+      "type": "object",
+      "properties": {
+        "postId": { "type": "string" },
+        "savedAt": { "type": "string" },
+        "isRead": { "type": "boolean" }
+      },
+      "required": ["postId"]
+    },
+    "Comment": {
+      "title": "Comment",
+      "description": "Discussion comment on a post",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "postId": { "type": "string" },
+        "author": { "type": "string" },
+        "content": { "type": "string" },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["id", "postId", "author", "content"]
+    }
+  },
+  "firestore": {
+    "/posts/{postId}": {
+      "schema": "Post",
+      "description": "Collection of all news and timeline posts"
+    },
+    "/users/{userId}": {
+      "schema": "User",
+      "description": "User profile and author follow lists"
+    },
+    "/users/{userId}/savedPosts/{itemId}": {
+      "schema": "SavedItem",
+      "description": "User saved and bookmarked articles"
+    },
+    "/users/{userId}/readLater/{itemId}": {
+      "schema": "SavedItem",
+      "description": "User read later queue items"
+    },
+    "/comments/{commentId}": {
+      "schema": "Comment",
+      "description": "Post discussion comments"
+    }
+  }
+}

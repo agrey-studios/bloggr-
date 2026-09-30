@@ -1,0 +1,6 @@
+{
+  "name": "Bloggr",
+  "description": "Modern news, blogging, short-video and user-generated content platform where people can discover news, read articles, watch short videos, follow authors and topics, and publish their own content.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
